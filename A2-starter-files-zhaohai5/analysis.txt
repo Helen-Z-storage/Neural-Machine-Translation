@@ -1,0 +1,84 @@
+The printout after every epoch of the training loop of both the model for the model trained without, with single-headed, and with multi-headed attention. 
+
+3. Train a model without attention
+srun -p csc401 python3.7 a2_run.py train $TRAIN vocab.e.gz vocab.f.gz train.txt.gz dev.txt.gz model_wo_att.pt.gz --device cuda
+100%|██████████| 2171/2171 [02:53<00:00, 12.54it/s]
+100%|██████████| 257/257 [02:15<00:00,  1.89it/s]
+Epoch 1: loss=0.015505138784646988, BLEU=0.2648944413108136
+100%|██████████| 2171/2171 [02:53<00:00, 12.51it/s]
+100%|██████████| 257/257 [02:16<00:00,  1.88it/s]
+Epoch 2: loss=0.010656101629137993, BLEU=0.2928851872884562
+100%|██████████| 2171/2171 [02:53<00:00, 12.49it/s]
+100%|██████████| 257/257 [02:14<00:00,  1.92it/s]
+Epoch 3: loss=0.008432295173406601, BLEU=0.3070057384686368
+100%|██████████| 2171/2171 [02:53<00:00, 12.48it/s]
+100%|██████████| 257/257 [02:13<00:00,  1.93it/s]
+Epoch 4: loss=0.006810508202761412, BLEU=0.314789499638445
+100%|██████████| 2171/2171 [02:53<00:00, 12.49it/s]
+100%|██████████| 257/257 [02:15<00:00,  1.89it/s]
+Epoch 5: loss=0.005583772901445627, BLEU=0.31801476646088933
+Finished 5 epochs
+
+4. train a model with attention
+srun -p csc401 python3.7 a2_run.py train $TRAIN vocab.e.gz vocab.f.gz train.txt.gz dev.txt.gz model_w_att.pt.gz --with-attention --device cuda
+100%|██████████| 2171/2171 [06:05<00:00,  5.93it/s]
+100%|██████████| 257/257 [02:36<00:00,  1.64it/s]
+Epoch 1: loss=0.014823581092059612, BLEU=0.2698134275085173
+100%|██████████| 2171/2171 [06:06<00:00,  5.92it/s]
+100%|██████████| 257/257 [02:28<00:00,  1.73it/s]
+Epoch 2: loss=0.010112050920724869, BLEU=0.2990365857486257
+100%|██████████| 2171/2171 [06:08<00:00,  5.89it/s]
+100%|██████████| 257/257 [02:25<00:00,  1.77it/s]
+Epoch 3: loss=0.007963456213474274, BLEU=0.31063753009173795
+100%|██████████| 2171/2171 [06:08<00:00,  5.89it/s]
+100%|██████████| 257/257 [02:31<00:00,  1.70it/s]
+Epoch 4: loss=0.0064424555748701096, BLEU=0.31968197422331307
+100%|██████████| 2171/2171 [06:09<00:00,  5.88it/s]
+100%|██████████| 257/257 [02:33<00:00,  1.67it/s]
+Epoch 5: loss=0.005339282099157572, BLEU=0.32451076006529234
+Finished 5 epochs
+
+5. Train a model with multi-head attention
+srun -p csc401 python3.7 a2_run.py train $TRAIN vocab.e.gz vocab.f.gz train.txt.gz dev.txt.gz model_w_mhatt.pt.gz --with-multihead-attention --device cuda
+100%|██████████| 2171/2171 [06:44<00:00,  5.37it/s]
+100%|██████████| 257/257 [02:28<00:00,  1.73it/s]
+Epoch 1: loss=0.015318972058594227, BLEU=0.2573412272695455
+100%|██████████| 2171/2171 [06:44<00:00,  5.37it/s]
+100%|██████████| 257/257 [02:46<00:00,  1.54it/s]
+Epoch 2: loss=0.010648863390088081, BLEU=0.2953324940069511
+100%|██████████| 2171/2171 [06:46<00:00,  5.34it/s]
+100%|██████████| 257/257 [02:35<00:00,  1.65it/s]
+Epoch 3: loss=0.008645156398415565, BLEU=0.31160355802721945
+100%|██████████| 2171/2171 [06:46<00:00,  5.34it/s]
+100%|██████████| 257/257 [02:38<00:00,  1.62it/s]
+Epoch 4: loss=0.007244345732033253, BLEU=0.32186282434086616
+100%|██████████| 2171/2171 [06:46<00:00,  5.34it/s]
+100%|██████████| 257/257 [02:41<00:00,  1.60it/s]
+Epoch 5: loss=0.006221110932528973, BLEU=0.32569661744361356
+Finished 5 epochs
+
+The average BLEU score reported on the test set for each model
+
+6. Test the model without attention
+srun -p csc401 python3.7 a2_run.py test $TEST vocab.e.gz vocab.f.gz model_wo_att.pt.gz --device cuda
+100%|██████████| 490/490 [03:21<00:00,  2.43it/s]
+The average BLEU score over the test set was 0.3656068939215251
+
+7. Test the model with attention
+srun -p csc401 python3.7 a2_run.py test $TEST vocab.e.gz vocab.f.gz model_w_att.pt.gz --with-attention --device cuda
+100%|██████████| 490/490 [03:48<00:00,  2.14it/s]
+The average BLEU score over the test set was 0.37448210338790855
+
+8. Test the model with multi-head attention
+srun -p csc401 python3.7 a2_run.py test $TEST vocab.e.gz vocab.f.gz model_w_mhatt.pt.gz --with-multihead-attention --device cuda
+100%|██████████| 490/490 [04:56<00:00,  1.65it/s]
+The average BLEU score over the test set was 0.3763610478986657
+
+A brief discussion on your findings. 
+
+Was there a discrepancy in between training and testing results? Why do you think that is?
+The training result's BLEU number is always 5 percent lower than the testing result. 
+I think it has a few possibilities: 1. the training package is too lucky to train a similar sentence with the test package. 2. the training package covered enough cases to let the network produce a better translation with the test package. 3. the ambiguity is minimized or never exists, so the translation will be more exact than the training process.
+
+If one model did better than the others, why do you think that is?
+My multi-headed attention is better than others, it may because that attention mechanism produces a lot more benefits (base on attention decoder is produce a better solution than decoder which without attention). And multi-headed attention is more efficient than single-headed attention since it uses a parallel linear process to progress the attended part.
